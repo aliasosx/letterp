@@ -13,22 +13,54 @@ class Api::V1::ProductMastersController < ApplicationController
 
     def create 
         begin
-            p = ProductMaster.new()
-            p.product_code = products_param[:product_code]
-            p.product_barcode = products_param[:product_barcode]
-            p.product_serial_number = products_param[:product_serial_number]
-            p.product_name = products_param[:product_name]
-            p.manufacture_date = products_param[:manufacture_date]
-            p.expire_date = products_param[:expire_date]
-            p.cost_price = products_param[:cost_price]
-            p.starting_quantity = products_param[:starting_quantity]
-            p.stock_in_date = products_param[:stock_in_date]
-            p.minimun_quantity = products_param[:minimun_quantity]
-            p.save
-            render json: { status: 'OK'}
+            ActiveRecord::Base.transaction do
+                p = ProductMaster.new()
+                p.product_code = products_param[:product_code]
+                p.product_barcode = products_param[:product_barcode]
+                p.product_serial_number = products_param[:product_serial_number]
+                p.product_name = products_param[:product_name]
+                p.manufacture_date = products_param[:manufacture_date]
+                p.expire_date = products_param[:expire_date]
+                p.cost_price = products_param[:cost_price]
+                p.starting_quantity = products_param[:starting_quantity]
+                p.stock_in_date = products_param[:stock_in_date]
+                p.minimun_quantity = products_param[:minimun_quantity]
+                p.save
+                st = Stock.new()
+                st.product_code = p.product_code
+                st.stock_date = Time.now
+                st.init_stock = p.starting_quantity
+                st.current_stock = st.init_stock
+                st.save
+                st_hist = StockTracking.new()
+                st_hist.product_code = p.product_code
+                st_hist.old_quantity = 0
+                st_hist.current_quantity = p.starting_quantity
+                st_hist.save
+            end                      
+            render json: { status: 'All updated OK'}
         rescue => exception
             render json: { status: exception}
         end       
+    end
+    
+    def updateStock(p)
+        begin
+            
+            return true
+        rescue => exception
+            return false
+        end
+        
+    end
+    def updateStockHist(p)
+        begin
+            
+            return true
+        rescue => exception
+            puts exception
+            return false
+        end    
     end
     def update
         begin
@@ -39,6 +71,7 @@ class Api::V1::ProductMastersController < ApplicationController
         rescue => exception
             render json: { status: exception}
         end
+        
     end  
     def destroy
         begin

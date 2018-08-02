@@ -1,0 +1,2 @@
+class StockTracking < ApplicationRecord
+end
