@@ -1,0 +1,2 @@
+class ProductPoint < ApplicationRecord
+end

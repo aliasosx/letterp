@@ -1,0 +1,2 @@
+class CustomerPoint < ApplicationRecord
+end

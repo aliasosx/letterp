@@ -14,6 +14,7 @@ class Api::V1::ProductMastersController < ApplicationController
     def create 
         begin
             ActiveRecord::Base.transaction do
+                #Product add new
                 p = ProductMaster.new()
                 p.product_code = products_param[:product_code]
                 p.product_barcode = products_param[:product_barcode]
@@ -25,13 +26,16 @@ class Api::V1::ProductMastersController < ApplicationController
                 p.starting_quantity = products_param[:starting_quantity]
                 p.stock_in_date = products_param[:stock_in_date]
                 p.minimun_quantity = products_param[:minimun_quantity]
+                p.warehouse_code = products_param[:warehouse_code]
                 p.save
+                #Add new product stock
                 st = Stock.new()
                 st.product_code = p.product_code
                 st.stock_date = Time.now
                 st.init_stock = p.starting_quantity
                 st.current_stock = st.init_stock
                 st.save
+                #Add new product stock history
                 st_hist = StockTracking.new()
                 st_hist.product_code = p.product_code
                 st_hist.old_quantity = 0
@@ -86,7 +90,7 @@ class Api::V1::ProductMastersController < ApplicationController
         private 
     def products_param
         params.permit(:id,:product_code,:product_barcode,:product_serial_number,:product_name,:manufacture_date,
-            :expire_date,:cost_price,:starting_quantity,:minimun_quantity,:stock_in_date)
+            :expire_date,:cost_price,:starting_quantity,:minimun_quantity,:stock_in_date,:warehouse_code)
     end
 end
 
