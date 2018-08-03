@@ -40,6 +40,16 @@ ActiveRecord::Schema.define(version: 0) do
     t.boolean "enabled", default: false
   end
 
+  create_table "customer_point_histories", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "tranxlogid", limit: 36, null: false
+    t.string "customer_code", limit: 20
+    t.integer "point", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["id"], name: "customer_point_histories_id_uindex", unique: true
+    t.index ["tranxlogid"], name: "customer_point_histories_tranxlogid_uindex", unique: true
+  end
+
   create_table "customer_points", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "customer_code", limit: 20, null: false
     t.integer "point", default: 0, null: false
@@ -155,6 +165,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.string "customer_code", limit: 20
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "tranxlogid", null: false
     t.index ["id"], name: "sales_id_uindex", unique: true
   end
 
@@ -164,7 +175,9 @@ ActiveRecord::Schema.define(version: 0) do
     t.float "current_quantity", limit: 53, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "transxlogid", limit: 36, null: false
     t.index ["id"], name: "stock_tracking_id_uindex", unique: true
+    t.index ["transxlogid"], name: "stock_trackings_transxlogid_uindex", unique: true
   end
 
   create_table "stocks", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
