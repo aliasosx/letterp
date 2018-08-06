@@ -8,9 +8,10 @@ Rails.application.routes.draw do
       resources :sale
       resources :currencies
       resources :customers
-      get 'stocks', to: 'stock#index'
+      resources :banners
+      #get 'stocks', to: 'stock#index'
+      resources :stock
       get 'sales', to: 'sale#index'
     end
   end
-
 end

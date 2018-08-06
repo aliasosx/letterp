@@ -176,6 +176,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "transxlogid", limit: 36, null: false
+    t.string "description", null: false
     t.index ["id"], name: "stock_tracking_id_uindex", unique: true
     t.index ["transxlogid"], name: "stock_trackings_transxlogid_uindex", unique: true
   end
@@ -187,6 +188,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.float "current_stock", limit: 53, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "update_by", limit: 20, null: false
     t.index ["id"], name: "stock_masters_id_uindex", unique: true
     t.index ["product_code"], name: "stock_masters_product_code_uindex", unique: true
   end
