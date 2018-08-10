@@ -13,11 +13,11 @@
 ActiveRecord::Schema.define(version: 0) do
 
   create_table "banners", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "company_code", limit: 4, null: false
+    t.string "company_code", limit: 6, null: false
     t.string "company_name", null: false
     t.datetime "established_date", null: false
-    t.datetime "created_date"
-    t.datetime "updated_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["company_code"], name: "banners_company_code_uindex", unique: true
     t.index ["company_name"], name: "banners_company_name_uindex", unique: true
     t.index ["id"], name: "banners_id_uindex", unique: true
