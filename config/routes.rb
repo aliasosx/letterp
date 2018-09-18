@@ -10,9 +10,11 @@ Rails.application.routes.draw do
       resources :customers
       resources :banners
       resources :menus
+      resources :user_master
       #get 'stocks', to: 'stock#index'
       resources :stock
       get 'sales', to: 'sale#index'
+      post 'login' , to: 'authenticates#login'
     end
   end
 end

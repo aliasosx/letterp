@@ -4,5 +4,4 @@ class Api::V1::MenusController < ApplicationController
         #render json: @menus
         render json: Menu.where(enabled:true).order(menu_order: :asc)
     end
-
 end
