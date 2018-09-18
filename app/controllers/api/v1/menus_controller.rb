@@ -12,8 +12,6 @@ class Api::V1::MenusController < ApplicationController
         render json: profile
     end
 
-
-
     private
     def menu_params
         params.permit(:id)
