@@ -1,0 +1,2 @@
+class TranxMenu < ApplicationRecord
+end

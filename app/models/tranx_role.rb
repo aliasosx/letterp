@@ -1,0 +1,2 @@
+class TranxRole < ApplicationRecord
+end
